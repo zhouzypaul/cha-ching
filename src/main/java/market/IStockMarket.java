@@ -1,13 +1,14 @@
 package main.java.market;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface IStockMarket {
 
-    public HashMap<IStock, PriceAmountPair<Float, Integer>> getMarketInfo();
+    public List<IStock> getMarketInfo();
 
-    public void adjustMarket(HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision,
-                             HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision);
+    public void adjustMarket(HashMap<IStock, Integer> buyDecision,
+                             HashMap<IStock, Integer> sellDecision);
 
     public void fluctuate();
 

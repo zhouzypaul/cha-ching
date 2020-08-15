@@ -1,7 +1,6 @@
 package main.java.agent;
 
 import main.java.market.IStock;
-import main.java.market.PriceAmountPair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +10,7 @@ public abstract class CommonAgent implements IAgent {
     protected float capital;
     protected float balance;
     protected float netWorth;
-    protected HashMap<IStock, PriceAmountPair<Float, Integer>> portfolio;
+    protected HashMap<IStock, Integer> portfolio;
 
     public CommonAgent() {
         this.capital = 10000;
@@ -38,7 +37,7 @@ public abstract class CommonAgent implements IAgent {
     }
 
     @Override
-    public HashMap<IStock, PriceAmountPair<Float, Integer>> getPortfolio() {
+    public HashMap<IStock, Integer> getPortfolio() {
         return this.portfolio;
     }
 
@@ -48,25 +47,23 @@ public abstract class CommonAgent implements IAgent {
     }
 
     @Override
-    public void updatePortfolio(HashMap<IStock, PriceAmountPair<Float, Integer>> buy,
-                                HashMap<IStock, PriceAmountPair<Float, Integer>> sell) {
-        for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : buy.entrySet()) {
+    public void updatePortfolio(HashMap<IStock, Integer> buy,
+                                HashMap<IStock, Integer> sell) {
+        for (Map.Entry<IStock, Integer> entry : buy.entrySet()) {
             IStock stock = entry.getKey();
-            Integer shares = entry.getValue().amount();
-            Float sharePrice = entry.getValue().price();
+            int shares = entry.getValue();
             if (this.portfolio.containsKey(stock)) {
-                this.portfolio.put(stock, new PriceAmountPair<>(sharePrice, this.portfolio.get(stock).amount() + shares));
+                this.portfolio.put(stock, this.portfolio.get(stock) + shares);
             } else {
-                this.portfolio.put(stock, new PriceAmountPair<>(sharePrice, shares));
+                this.portfolio.put(stock, shares);
             }
         }
-        for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : sell.entrySet()) {
+        for (Map.Entry<IStock, Integer> entry : sell.entrySet()) {
             IStock stock = entry.getKey();
-            Integer shares = entry.getValue().amount();
-            Float sharePrice = entry.getValue().price();
+            Integer shares = entry.getValue();
             if (this.portfolio.containsKey(stock)) {
-                if (this.portfolio.get(stock).amount() >= shares) {
-                    this.portfolio.put(stock, new PriceAmountPair<>(sharePrice, this.portfolio.get(stock).amount() - shares));
+                if (this.portfolio.get(stock) >= shares) {
+                    this.portfolio.put(stock, this.portfolio.get(stock) - shares);
                 } else {
                     throw new RuntimeException("trying to sell stocks more than possessed");
                 }
@@ -77,11 +74,10 @@ public abstract class CommonAgent implements IAgent {
     }
 
     @Override
-    public float calculateSum(HashMap<IStock, PriceAmountPair<Float, Integer>> map) {
+    public float calculateSum(HashMap<IStock, Integer> map) {
         float sum = 0;
-        for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : map.entrySet()) {
-            // sum = sum + entry.getValue().totalValue();
-            sum = sum + entry.getValue().amount() * entry.getValue().price();
+        for (Map.Entry<IStock, Integer> entry : map.entrySet()) {
+            sum = sum + entry.getValue() * entry.getKey().getPrice();
         }
         return sum;
     }
@@ -93,17 +89,16 @@ public abstract class CommonAgent implements IAgent {
     }
 
     @Override
-    public float portfolioWorth(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo) {
+    public float portfolioWorth() {
         return this.calculateSum(this.portfolio);
     }
 
     public void printPortfolio() {
         System.out.println("The agent is in possession of the following stocks");
-        for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : this.portfolio.entrySet()) {
+        for (Map.Entry<IStock, Integer> entry : this.portfolio.entrySet()) {
             IStock stock = entry.getKey();
-            int amount = entry.getValue().amount();
-            // float totalPrice = entry.getValue().totalValue();
-            float totalPrice = entry.getValue().price() * entry.getValue().amount();
+            int amount = entry.getValue();
+            float totalPrice = entry.getKey().getPrice() * entry.getValue();
             System.out.println(stock.getName() + ": " + "shares: " + amount + " total worth: " + totalPrice);
         }
     }

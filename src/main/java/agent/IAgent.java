@@ -1,9 +1,9 @@
 package main.java.agent;
 
 import main.java.market.IStock;
-import main.java.market.PriceAmountPair;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface IAgent {
 
@@ -11,7 +11,7 @@ public interface IAgent {
 
     public float getNetWorth();
 
-    public HashMap<IStock, PriceAmountPair<Float, Integer>> getPortfolio();
+    public HashMap<IStock, Integer> getPortfolio();
 
     /**
      * determine whether the agent is broke or not
@@ -28,22 +28,21 @@ public interface IAgent {
      * @param buyDecision  a hashmap of how much stock the agent buys
      * @param sellDecision a hashmap of how much stock the agent sells
      */
-    public void updatePortfolio(HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision,
-                                HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision);
+    public void updatePortfolio(HashMap<IStock, Integer> buyDecision,
+                                HashMap<IStock, Integer> sellDecision);
 
-    public float calculateSum(HashMap<IStock, PriceAmountPair<Float, Integer>> map);
+    public float calculateSum(HashMap<IStock, Integer> map);
 
     /**
      * calculate how much the portfolio is worth, money wise
      *
-     * @param marketInfo the price of each stock in the market in a hashmap
      * @return a float of the total value of the portfolio
      */
-    public float portfolioWorth(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo);
+    public float portfolioWorth();
 
     public void printInfo();
 
-    public HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo);
+    public HashMap<IStock, Integer> buyDecision(List<IStock> marketInfo);
 
-    public HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo);
+    public HashMap<IStock, Integer> sellDecision(List<IStock> marketInfo);
 }

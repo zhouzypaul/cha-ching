@@ -2,8 +2,10 @@ package main.java;
 
 import main.java.agent.IAgent;
 import main.java.agent.RandomAgent;
-import main.java.controller.TradingCenter;
-import main.java.market.*;
+import main.java.market.IStock;
+import main.java.market.IStockMarket;
+import main.java.market.NaiveMarket;
+import main.java.market.StockApple;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -18,28 +20,27 @@ public class app {
         List<IStock> stockList = new LinkedList<>();
         stockList.add(apple);
         IStockMarket market = new NaiveMarket(stockList);
-        TradingCenter tradingCenter = new TradingCenter(market, agent);
         int time = 1;
 
         while (!agent.broke()) {
 
             System.out.println("time: " + time);
 
-            HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo = market.getMarketInfo();
-            HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision = agent.buyDecision(marketInfo);
+            List<IStock> marketInfo = market.getMarketInfo();
+            HashMap<IStock, Integer> buyDecision = agent.buyDecision(marketInfo);
             float cost = agent.calculateSum(buyDecision);
-            HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision = agent.sellDecision(marketInfo);
+            HashMap<IStock, Integer> sellDecision = agent.sellDecision(marketInfo);
             float profit = agent.calculateSum(sellDecision);
 
             agent.updatePortfolio(buyDecision, sellDecision);
-            float portfolioWorth = agent.portfolioWorth(marketInfo);
+            float portfolioWorth = agent.portfolioWorth();
             agent.updateMoney(portfolioWorth, cost, profit);
             agent.printInfo();
 
             time = time + 1;
             market.adjustMarket(buyDecision, sellDecision);
             market.fluctuate();
-//            market.printInfo();
+            market.printInfo();
 
         }
 

@@ -12,4 +12,6 @@ public interface IStock {
 
     public void adjustPrice(float amount);
 
+    public void fluctuate();
+
 }

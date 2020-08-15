@@ -1,9 +1,9 @@
 package main.java.agent;
 
 import main.java.market.IStock;
-import main.java.market.PriceAmountPair;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -18,17 +18,16 @@ public class RandomAgent extends CommonAgent implements IAgent {
     }
 
     @Override
-    public HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo) {
-        HashMap<IStock, PriceAmountPair<Float, Integer>> buy = new HashMap<>();
-        for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : marketInfo.entrySet()) {
-            IStock stock = entry.getKey();
-            Float sharePrice = entry.getValue().price();
-            int sharesAvailable = entry.getValue().amount();
+    public HashMap<IStock, Integer> buyDecision(List<IStock> marketInfo) {
+        HashMap<IStock, Integer> buy = new HashMap<>();
+        for (IStock stock : marketInfo) {
+            float sharePrice = stock.getPrice();
+            int sharesAvailable = stock.getAvailableShares();
             if (this.balance > sharePrice) {
                 Random rand = new Random();
                 if (rand.nextDouble() > 0.5) {
                     int buyAmount = rand.nextInt(Math.min(sharesAvailable / 100, (int) (this.balance / sharePrice / 10)));
-                    buy.put(stock, new PriceAmountPair<>(sharePrice, buyAmount));
+                    buy.put(stock, buyAmount);
                 }
             }
         }
@@ -36,18 +35,18 @@ public class RandomAgent extends CommonAgent implements IAgent {
     }
 
     @Override
-    public HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo) {
-        HashMap<IStock, PriceAmountPair<Float, Integer>> sell = new HashMap<>();
-        for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : this.portfolio.entrySet()) {
+    public HashMap<IStock, Integer> sellDecision(List<IStock> marketInfo) {
+        HashMap<IStock, Integer> sell = new HashMap<>();
+        for (Map.Entry<IStock, Integer> entry : this.portfolio.entrySet()) {
             IStock stock = entry.getKey();
-            Float sharePrice = entry.getValue().price();
-            int sharesAvailable = entry.getValue().amount();
+            int sharesPossess = entry.getValue();
             Random rand = new Random();
             if (rand.nextDouble() > 0.5) {
-                int sellAmount = rand.nextInt(sharesAvailable);
-                sell.put(stock, new PriceAmountPair<>(sharePrice, sellAmount));
+                int sellAmount = rand.nextInt(sharesPossess);
+                sell.put(stock, sellAmount);
             }
         }
         return sell;
     }
+
 }
