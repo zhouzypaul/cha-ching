@@ -1,8 +1,15 @@
 package main.java.market;
 
 public interface IStock {
-    // TODO: put the methods here
 
     public String getName();
+
+    public float getPrice();
+
+    public int getAvailableShares();
+
+    public void adjustAvailableShares(int amount);
+
+    public void adjustPrice(float amount);
 
 }

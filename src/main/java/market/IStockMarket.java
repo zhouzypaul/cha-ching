@@ -9,4 +9,8 @@ public interface IStockMarket {
     public void adjustMarket(HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision,
                              HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision);
 
+    public void fluctuate();
+
+    public void printInfo();
+
 }

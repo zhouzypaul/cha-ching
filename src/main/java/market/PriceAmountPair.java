@@ -17,7 +17,7 @@ public class PriceAmountPair<Float, Integer> {
         return this.a;
     }
 
-    public float totalValue() {
-        return (float) this.p * (float) this.a;
-    }
+//    public Float totalValue() {
+//        return this.p * (Float) this.a;
+//    }
 }

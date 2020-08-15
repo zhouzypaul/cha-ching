@@ -80,7 +80,8 @@ public abstract class CommonAgent implements IAgent {
     public float calculateSum(HashMap<IStock, PriceAmountPair<Float, Integer>> map) {
         float sum = 0;
         for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : map.entrySet()) {
-            sum = sum + entry.getValue().totalValue();
+            // sum = sum + entry.getValue().totalValue();
+            sum = sum + entry.getValue().amount() * entry.getValue().price();
         }
         return sum;
     }
@@ -95,13 +96,14 @@ public abstract class CommonAgent implements IAgent {
     public float portfolioWorth(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo) {
         return this.calculateSum(this.portfolio);
     }
-    
+
     public void printPortfolio() {
         System.out.println("The agent is in possession of the following stocks");
         for (Map.Entry<IStock, PriceAmountPair<Float, Integer>> entry : this.portfolio.entrySet()) {
             IStock stock = entry.getKey();
             int amount = entry.getValue().amount();
-            float totalPrice = entry.getValue().totalValue();
+            // float totalPrice = entry.getValue().totalValue();
+            float totalPrice = entry.getValue().price() * entry.getValue().amount();
             System.out.println(stock.getName() + ": " + "shares: " + amount + " total worth: " + totalPrice);
         }
     }
@@ -114,5 +116,6 @@ public abstract class CommonAgent implements IAgent {
         System.out.println("Your net worth is: " + this.getNetWorth());
         this.printPortfolio();
         System.out.println("----------------------------");
+        System.out.println();
     }
 }
