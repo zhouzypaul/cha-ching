@@ -9,6 +9,8 @@ public interface IAgent {
 
     public float getBalance();
 
+    public float getNetWorth();
+
     public HashMap<IStock, PriceAmountPair<Float, Integer>> getPortfolio();
 
     /**
@@ -18,14 +20,30 @@ public interface IAgent {
      */
     public boolean broke();
 
+    public void updateMoney(float portfolioWorth, float cost, float profit);
+
     /**
-     * update the agent balance once it makes a purchase
+     * update the holdings of the agent after buying and selling decisions
+     *
+     * @param buyDecision  a hashmap of how much stock the agent buys
+     * @param sellDecision a hashmap of how much stock the agent sells
      */
-    public void updateBalance(float amountSpent);
+    public void updatePortfolio(HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision,
+                                HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision);
 
-    public void updatePortfolio(IStock stock, float amount);
+    public float calculateSum(HashMap<IStock, PriceAmountPair<Float, Integer>> map);
 
-    public void printPortfolio();
+    /**
+     * calculate how much the portfolio is worth, money wise
+     *
+     * @param marketInfo the price of each stock in the market in a hashmap
+     * @return a float of the total value of the portfolio
+     */
+    public float portfolioWorth(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo);
 
-    public void decision(float sharePrice, int sharesBought); //TODO: change the output type
+    public void printInfo();
+
+    public HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo);
+
+    public HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo);
 }

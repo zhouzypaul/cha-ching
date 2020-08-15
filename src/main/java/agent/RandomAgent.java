@@ -1,6 +1,9 @@
 package main.java.agent;
 
-import java.util.Random;
+import main.java.market.IStock;
+import main.java.market.PriceAmountPair;
+
+import java.util.HashMap;
 
 public class RandomAgent extends CommonAgent implements IAgent {
 
@@ -13,12 +16,12 @@ public class RandomAgent extends CommonAgent implements IAgent {
     }
 
     @Override
-    public void decision(float sharePrice, int sharesBought) {
-        Random rand = new Random();
-        if (rand.nextFloat() > 0.5) {
-            super.updateBalance(sharePrice * sharesBought);
-            //TODO: communicate with controller
-        }
+    public HashMap<IStock, PriceAmountPair<Float, Integer>> buyDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo) {
+        return null;
     }
 
+    @Override
+    public HashMap<IStock, PriceAmountPair<Float, Integer>> sellDecision(HashMap<IStock, PriceAmountPair<Float, Integer>> marketInfo) {
+        return null;
+    }
 }
