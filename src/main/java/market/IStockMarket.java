@@ -14,4 +14,6 @@ public interface IStockMarket {
 
     public void printInfo();
 
+    public void drawInfo();
+
 }
