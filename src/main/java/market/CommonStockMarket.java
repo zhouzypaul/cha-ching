@@ -45,7 +45,7 @@ public abstract class CommonStockMarket implements IStockMarket {
             while ((s = stdInput.readLine()) != null) {
                 System.out.println(s);
             }
-            System.out.println("error is: " + stdError.readLine());
+//            System.out.println("error is: " + stdError.readLine());
         } catch (IOException e) {
             e.printStackTrace();
         }

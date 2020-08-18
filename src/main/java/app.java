@@ -21,8 +21,9 @@ public class app {
         stockList.add(apple);
         IStockMarket market = new NaiveMarket(stockList);
         int time = 1;
+        int timeLimit = 100000;
 
-        while (!agent.broke()) {
+        while (time <= timeLimit && !agent.broke()) {
 
             System.out.println("time: " + time);
 
