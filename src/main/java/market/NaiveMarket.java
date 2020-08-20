@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class NaiveMarket extends CommonStockMarket implements IStockMarket {
 
-    public NaiveMarket(List<IStock> stockList) {
-        super(stockList);
+    public NaiveMarket(List<IStock> stockList, int historyLen) {
+        super(stockList, historyLen);
     }
 
     @Override

@@ -12,61 +12,63 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class XYGraph extends ApplicationFrame {
 
-    public XYGraph(String applicationTitle, String chartTitle) {
+    public XYGraph(String applicationTitle, String chartTitle,
+                   ArrayList<Float> netWorth, ArrayList<Float> portfolioWorth, ArrayList<Float> stockWorth) {
         super(applicationTitle);
         JFreeChart xylineChart = ChartFactory.createXYLineChart(
                 chartTitle,
                 "Time",
                 "Price",
-                createDataset(),
+                createDataset(netWorth, portfolioWorth, stockWorth),
                 PlotOrientation.VERTICAL,
                 true, true, false);
 
         ChartPanel chartPanel = new ChartPanel(xylineChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+        chartPanel.setPreferredSize(new java.awt.Dimension(560 * 3, 367 * 3));
         final XYPlot plot = xylineChart.getXYPlot();
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.RED);
-//        renderer.setSeriesPaint(1, Color.GREEN);
-//        renderer.setSeriesPaint(2, Color.YELLOW);
-        renderer.setSeriesStroke(0, new BasicStroke(4.0f));
-//        renderer.setSeriesStroke(1, new BasicStroke(3.0f));
-//        renderer.setSeriesStroke(2, new BasicStroke(2.0f));
+        renderer.setSeriesPaint(1, Color.GREEN);
+        renderer.setSeriesPaint(2, Color.YELLOW);
+        renderer.setSeriesStroke(0, new BasicStroke(1.0f));
+        renderer.setSeriesStroke(1, new BasicStroke(1.0f));
+        renderer.setSeriesStroke(2, new BasicStroke(1.0f));
         plot.setRenderer(renderer);
         setContentPane(chartPanel);
     }
 
-    private XYDataset createDataset() {
-        final XYSeries firefox = new XYSeries("Firefox");
-        firefox.add(1.0, 1.0);
-        firefox.add(2.0, 4.0);
-        firefox.add(3.0, 3.0);
+    private XYDataset createDataset(ArrayList<Float> netWorth, ArrayList<Float> portfolioWorth, ArrayList<Float> stockWorth) {
 
-        final XYSeries chrome = new XYSeries("Chrome");
-        chrome.add(1.0, 4.0);
-        chrome.add(2.0, 5.0);
-        chrome.add(3.0, 6.0);
+        final XYSeries worth = new XYSeries("Net Worth");
+        for (int i = 0; i < netWorth.size(); i++) {
+            worth.add(i, netWorth.get(i));
+        }
 
-        final XYSeries iexplorer = new XYSeries("InternetExplorer");
-        iexplorer.add(3.0, 4.0);
-        iexplorer.add(4.0, 5.0);
-        iexplorer.add(5.0, 4.0);
+        final XYSeries portfolio = new XYSeries("Portfolio Worth");
+        for (int i = 0; i < portfolioWorth.size(); i++) {
+            portfolio.add(i, portfolioWorth.get(i));
+        }
+
+        final XYSeries stock = new XYSeries("Stock Worth");
+        for (int i = 0; i < stockWorth.size(); i++) {
+            stock.add(i, stockWorth.get(i));
+        }
 
         final XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(firefox);
-        dataset.addSeries(chrome);
-        dataset.addSeries(iexplorer);
+        dataset.addSeries(worth);
+        dataset.addSeries(portfolio);
+        dataset.addSeries(stock);
         return dataset;
     }
 
     public static void main(String[] args) {
-        XYGraph chart = new XYGraph("Stock Market",
-                "Price Over Time");
-        chart.pack();
-        chart.setVisible(true);
+//        XYGraph chart = new XYGraph("Stock Market", "Price Over Time");
+//        chart.pack();
+//        chart.setVisible(true);
     }
 }

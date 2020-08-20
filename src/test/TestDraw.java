@@ -13,7 +13,7 @@ public class TestDraw {
         IStock apple = new StockApple(30, 100000);
         List<IStock> stockList = new LinkedList<>();
         stockList.add(apple);
-        NaiveMarket market = new NaiveMarket(stockList);
+        NaiveMarket market = new NaiveMarket(stockList, 10);
 
         market.drawInfoPy();
     }

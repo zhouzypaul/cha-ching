@@ -11,6 +11,10 @@ public class StockApple extends CommonStock implements IStock {
     @Override
     public void fluctuate() {
         Random rand = new Random();
-        this.adjustPrice((rand.nextInt(3) - 1) * (this.getPrice() / 100));
+        if (this.getPrice() < 5) {
+            this.adjustPrice(1);
+        } else {
+            this.adjustPrice((rand.nextInt(3) - 1) * (float) (30.0 / 100));
+        }
     }
 }

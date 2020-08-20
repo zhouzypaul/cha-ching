@@ -2,6 +2,7 @@ package main.java.agent;
 
 import main.java.market.IStock;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,7 +43,9 @@ public interface IAgent {
 
     public void printInfo();
 
-    public HashMap<IStock, Integer> buyDecision(List<IStock> marketInfo);
+    public HashMap<IStock, Integer> buyDecision(List<IStock> marketInfo,
+                                                HashMap<IStock, ArrayList<Float>> pastInfo);
 
-    public HashMap<IStock, Integer> sellDecision(List<IStock> marketInfo);
+    public HashMap<IStock, Integer> sellDecision(List<IStock> marketInfo,
+                                                 HashMap<IStock, ArrayList<Float>> pastInfo);
 }

@@ -2,23 +2,20 @@ package main.java.agent;
 
 import main.java.market.IStock;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class RandomAgent extends CommonAgent implements IAgent {
 
-    public RandomAgent() {
-        super();
+    public RandomAgent(int historyLen) {
+        super(historyLen);
     }
 
-    public RandomAgent(float capital) {
-        super(capital);
+    public RandomAgent(float capital, int historyLen) {
+        super(capital, historyLen);
     }
 
     @Override
-    public HashMap<IStock, Integer> buyDecision(List<IStock> marketInfo) {
+    public HashMap<IStock, Integer> buyDecision(List<IStock> marketInfo, HashMap<IStock, ArrayList<Float>> pastInfo) {
         HashMap<IStock, Integer> buy = new HashMap<>();
         for (IStock stock : marketInfo) {
             float sharePrice = stock.getPrice();
@@ -26,7 +23,7 @@ public class RandomAgent extends CommonAgent implements IAgent {
             if (this.balance > sharePrice) {
                 Random rand = new Random();
                 if (rand.nextDouble() > 0.5) {
-                    int buyAmount = rand.nextInt(Math.min(sharesAvailable / 100, (int) (this.balance / sharePrice / 10)));
+                    int buyAmount = rand.nextInt(Math.min(sharesAvailable / 10, (int) (this.balance / sharePrice / 10)));
                     buy.put(stock, buyAmount);
                 }
             }
@@ -35,7 +32,7 @@ public class RandomAgent extends CommonAgent implements IAgent {
     }
 
     @Override
-    public HashMap<IStock, Integer> sellDecision(List<IStock> marketInfo) {
+    public HashMap<IStock, Integer> sellDecision(List<IStock> marketInfo, HashMap<IStock, ArrayList<Float>> pastInfo) {
         HashMap<IStock, Integer> sell = new HashMap<>();
         for (Map.Entry<IStock, Integer> entry : this.portfolio.entrySet()) {
             IStock stock = entry.getKey();
