@@ -23,7 +23,7 @@ public class RandomAgent extends CommonAgent implements IAgent {
             if (this.balance > sharePrice) {
                 Random rand = new Random();
                 if (rand.nextDouble() > 0.5) {
-                    int buyAmount = rand.nextInt(Math.min(sharesAvailable / 10, (int) (this.balance / sharePrice / 10)));
+                    int buyAmount = rand.nextInt(Math.min(sharesAvailable / 10 + 1, (int) (this.balance / sharePrice / 10 + 1)));
                     buy.put(stock, buyAmount);
                 }
             }
@@ -38,12 +38,17 @@ public class RandomAgent extends CommonAgent implements IAgent {
             IStock stock = entry.getKey();
             int sharesPossess = entry.getValue();
             Random rand = new Random();
-            if (rand.nextDouble() > 0.5) {
+            if (rand.nextDouble() > 0.5 && sharesPossess > 0) {
                 int sellAmount = rand.nextInt(sharesPossess);
                 sell.put(stock, sellAmount);
             }
         }
         return sell;
+    }
+
+    @Override
+    public String toString() {
+        return "Random Agent";
     }
 
 }

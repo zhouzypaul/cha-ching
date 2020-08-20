@@ -28,6 +28,7 @@ public class AutoAgent extends CommonAgent implements IAgent {
                 for (int i = 0; i < hist; i++) {
                     reg.addData(hist - i, pastInfo.get(stock).get(i));
                 }
+                reg.addData(hist, stock.getPrice());
                 double slope = reg.getSlope();
                 if (slope < 0) {
                     int buyAmount = Math.min(stock.getAvailableShares(), (int) (this.balance * 0.1 / stock.getPrice()));
@@ -50,6 +51,7 @@ public class AutoAgent extends CommonAgent implements IAgent {
                 for (int i = 0; i < hist; i++) {
                     reg.addData(hist - i, pastInfo.get(stock).get(i));
                 }
+                reg.addData(hist, stock.getPrice());
                 double slope = reg.getSlope();
                 if (slope > 0) {
                     int sellAmount = (int) (0.5 * amountPossess);
@@ -58,6 +60,11 @@ public class AutoAgent extends CommonAgent implements IAgent {
             }
         }
         return sell;
+    }
+
+    @Override
+    public String toString() {
+        return "Auto Agent";
     }
 
 }

@@ -28,7 +28,7 @@ public class XYGraph extends ApplicationFrame {
                 true, true, false);
 
         ChartPanel chartPanel = new ChartPanel(xylineChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560 * 3, 367 * 3));
+        chartPanel.setPreferredSize(new java.awt.Dimension(750, 550));
         final XYPlot plot = xylineChart.getXYPlot();
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
