@@ -2,9 +2,9 @@ package main.java.market;
 
 public abstract class CommonStock implements IStock {
 
-    private final String name;
-    private float price;
-    private int availableShares;
+    protected final String name;
+    protected float price;
+    protected int availableShares;
 
     public CommonStock(String name, float initPrice, int initShares) {
         this.name = name;

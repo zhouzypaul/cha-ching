@@ -30,6 +30,15 @@ public abstract class CommonStockMarket implements IStockMarket {
     }
 
     @Override
+    public float getAveragePrice() {
+        float average = 0;
+        for (IStock stock : this.marketInfo) {
+            average += stock.getPrice() / this.marketInfo.size();
+        }
+        return average;
+    }
+
+    @Override
     public void updatePastInfo() {
         for (IStock stock : this.marketInfo) {
             if (this.pastInfo.containsKey(stock)) {

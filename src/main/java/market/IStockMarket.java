@@ -10,6 +10,8 @@ public interface IStockMarket {
 
     public HashMap<IStock, ArrayList<Float>> getPastInfo();
 
+    public float getAveragePrice();
+
     public void updatePastInfo();
 
     public void adjustMarket(HashMap<IStock, Integer> buyDecision,

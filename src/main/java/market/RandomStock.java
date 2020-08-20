@@ -2,16 +2,16 @@ package main.java.market;
 
 import java.util.Random;
 
-public class StockApple extends CommonStock implements IStock {
+public class RandomStock extends CommonStock implements IStock {
 
-    public StockApple(float initPrice, int initShares) {
-        super("Apple", initPrice, initShares);
+    public RandomStock(float initPrice, int initShares) {
+        super("Random Stock", initPrice, initShares);
     }
 
     @Override
     public void fluctuate() {
         Random rand = new Random();
-        if (this.getPrice() < 5) {
+        if (this.price < 5) {
             this.adjustPrice(1);
         } else {
             this.adjustPrice((rand.nextInt(3) - 1) * (float) (30.0 / 100));

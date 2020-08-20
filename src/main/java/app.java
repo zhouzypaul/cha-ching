@@ -4,10 +4,7 @@ import main.java.agent.AutoAgent;
 import main.java.agent.IAgent;
 import main.java.agent.RandomAgent;
 import main.java.graph.XYGraph;
-import main.java.market.IStock;
-import main.java.market.IStockMarket;
-import main.java.market.NaiveMarket;
-import main.java.market.StockApple;
+import main.java.market.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +20,13 @@ public class app {
         ArrayList<IAgent> agentList = new ArrayList<>();
         agentList.add(autoAgent);
         agentList.add(randAgent);
-        IStock apple = new StockApple(30, 100);
+        IStock randStock = new RandomStock(30, 100);
+        IStock risingStock = new RisingStock(1, 100);
         List<IStock> stockList = new LinkedList<>();
-        stockList.add(apple);
+        stockList.add(randStock);
+//        stockList.add(risingStock);
         IStockMarket market = new NaiveMarket(stockList, 10);
+
         int time = 1;
         int timeLimit = 1000000;
         boolean debug = false;
@@ -74,7 +74,7 @@ public class app {
                 // graph
                 netW.get(agent).add(agent.getNetWorth());
                 portfolioW.get(agent).add(portfolioWorth);
-                stockW.get(agent).add(marketInfo.get(0).getPrice() * 300);
+                stockW.get(agent).add(market.getAveragePrice() * 300);
 
                 // market update
                 market.adjustMarket(buyDecision, sellDecision);
