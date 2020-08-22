@@ -32,6 +32,7 @@ public class NaiveMarket extends CommonStockMarket implements IStockMarket {
         for (IStock stock : this.marketInfo) {
             stock.fluctuate();
         }
+        this.time += 1;
     }
 
 }

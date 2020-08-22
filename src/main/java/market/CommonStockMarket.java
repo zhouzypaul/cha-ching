@@ -12,11 +12,18 @@ public abstract class CommonStockMarket implements IStockMarket {
     protected List<IStock> marketInfo;
     protected HashMap<IStock, ArrayList<Float>> pastInfo;
     protected int historyLen;
+    protected int time;
 
     public CommonStockMarket(List<IStock> stockList, int historyLen) {
         this.marketInfo = stockList;
         this.pastInfo = new HashMap<>();
         this.historyLen = historyLen;
+        this.time = 1;
+    }
+
+    @Override
+    public int getTime() {
+        return this.time;
     }
 
     @Override

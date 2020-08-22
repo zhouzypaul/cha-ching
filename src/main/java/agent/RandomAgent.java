@@ -4,14 +4,17 @@ import main.java.market.IStock;
 
 import java.util.*;
 
+/**
+ * the random agent buys and sells randomly
+ */
 public class RandomAgent extends CommonAgent implements IAgent {
 
-    public RandomAgent(int historyLen) {
-        super(historyLen);
+    public RandomAgent() {
+        super();
     }
 
-    public RandomAgent(float capital, int historyLen) {
-        super(capital, historyLen);
+    public RandomAgent(float capital) {
+        super(capital);
     }
 
     @Override

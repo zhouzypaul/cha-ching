@@ -54,7 +54,7 @@ public class XYGraph extends ApplicationFrame {
             portfolio.add(i, portfolioWorth.get(i));
         }
 
-        final XYSeries stock = new XYSeries("Stock Worth");
+        final XYSeries stock = new XYSeries("Relative Stock Price");
         for (int i = 0; i < stockWorth.size(); i++) {
             stock.add(i, stockWorth.get(i));
         }

@@ -1,10 +1,14 @@
 package main.java;
 
 import main.java.agent.AutoAgent;
+import main.java.agent.AveragingAgent;
 import main.java.agent.IAgent;
 import main.java.agent.RandomAgent;
 import main.java.graph.XYGraph;
-import main.java.market.*;
+import main.java.market.IStock;
+import main.java.market.IStockMarket;
+import main.java.market.NaiveMarket;
+import main.java.market.RandomStock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,19 +20,22 @@ public class app {
     public static void main(String[] args) {
 
         IAgent autoAgent = new AutoAgent(5);
-        IAgent randAgent = new RandomAgent(5);
+        IAgent randAgent = new RandomAgent();
+        IAgent avgAgent = new AveragingAgent(5, 20);
         ArrayList<IAgent> agentList = new ArrayList<>();
         agentList.add(autoAgent);
         agentList.add(randAgent);
-        IStock randStock = new RandomStock(30, 100);
-        IStock risingStock = new RisingStock(1, 100);
+        agentList.add(avgAgent);
+        IStock randStock = new RandomStock(10, 1000);
+        IStock randStock2 = new RandomStock(15, 1000);
+        IStock randStock3 = new RandomStock(20, 1000);
         List<IStock> stockList = new LinkedList<>();
         stockList.add(randStock);
-//        stockList.add(risingStock);
+        stockList.add(randStock2);
+        stockList.add(randStock3);
         IStockMarket market = new NaiveMarket(stockList, 10);
 
-        int time = 1;
-        int timeLimit = 1000000;
+        int timeLimit = 10000;
         boolean debug = false;
 
         HashMap<IAgent, ArrayList<Float>> netW = new HashMap<>();
@@ -40,9 +47,9 @@ public class app {
             stockW.put(agent, new ArrayList<>());
         }
 
-        while (time <= timeLimit) {
+        while (market.getTime() <= timeLimit) {
 
-            System.out.println("time: " + time);
+            System.out.println("time: " + market.getTime());
             List<IStock> marketInfo = market.getMarketInfo();
             HashMap<IStock, ArrayList<Float>> pastInfo = market.getPastInfo();
             for (IAgent agent : agentList) {
@@ -74,7 +81,7 @@ public class app {
                 // graph
                 netW.get(agent).add(agent.getNetWorth());
                 portfolioW.get(agent).add(portfolioWorth);
-                stockW.get(agent).add(market.getAveragePrice() * 300);
+                stockW.get(agent).add(market.getAveragePrice() * 2000);
 
                 // market update
                 market.adjustMarket(buyDecision, sellDecision);
@@ -83,7 +90,6 @@ public class app {
             market.updatePastInfo();
             market.fluctuate();
 //            market.printInfo();
-            time = time + 1;
 
         }
 

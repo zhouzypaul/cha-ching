@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IStockMarket {
 
+    public int getTime();
+
     public List<IStock> getMarketInfo();
 
     public HashMap<IStock, ArrayList<Float>> getPastInfo();

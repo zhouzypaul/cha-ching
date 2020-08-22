@@ -8,14 +8,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * the auto agent looks at a sequence of history from the stock market
+ * if the stock seems to be going down, it buys
+ * if the stock seems to be going up, it sells
+ * the stock market trend is analyzed using linear regression on the past few data points
+ */
 public class AutoAgent extends CommonAgent implements IAgent {
 
+    private final int historyLen;
+
     public AutoAgent(int historyLen) {
-        super(historyLen);
+        super();
+        this.historyLen = historyLen;
     }
 
     public AutoAgent(float capital, int historyLen) {
-        super(capital, historyLen);
+        super(capital);
+        this.historyLen = historyLen;
     }
 
     @Override

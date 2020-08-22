@@ -11,22 +11,19 @@ public abstract class CommonAgent implements IAgent {
     protected float balance;
     protected float netWorth;
     protected HashMap<IStock, Integer> portfolio;
-    protected int historyLen;
 
-    public CommonAgent(int historyLen) {
+    public CommonAgent() {
         this.capital = 10000;
         this.balance = this.capital;
         this.portfolio = new HashMap<>();
         this.netWorth = this.balance;
-        this.historyLen = historyLen;
     }
 
-    public CommonAgent(float capital, int historyLen) {
+    public CommonAgent(float capital) {
         this.capital = capital;
         this.balance = this.capital;
         this.portfolio = new HashMap<>();
         this.netWorth = this.balance;
-        this.historyLen = historyLen;
     }
 
     @Override
@@ -108,8 +105,8 @@ public abstract class CommonAgent implements IAgent {
 
     @Override
     public void printInfo() {
-        System.out.println("Here's you current status: ");
         System.out.println("----------------------------");
+        System.out.println(this.toString());
         System.out.println("You balance is: " + this.getBalance());
         System.out.println("Your net worth is: " + this.getNetWorth());
         this.printPortfolio();
