@@ -1,4 +1,4 @@
-package main.java.market;
+package main.java.stock;
 
 import java.util.Random;
 

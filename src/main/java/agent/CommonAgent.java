@@ -1,6 +1,6 @@
 package main.java.agent;
 
-import main.java.market.IStock;
+import main.java.stock.IStock;
 
 import java.util.HashMap;
 import java.util.Map;

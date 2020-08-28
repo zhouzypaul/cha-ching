@@ -1,14 +1,12 @@
 package main.java;
 
-import main.java.agent.AutoAgent;
-import main.java.agent.AveragingAgent;
-import main.java.agent.IAgent;
-import main.java.agent.RandomAgent;
+import main.java.agent.*;
 import main.java.graph.XYGraph;
-import main.java.market.IStock;
 import main.java.market.IStockMarket;
 import main.java.market.NaiveMarket;
-import main.java.market.RandomStock;
+import main.java.stock.IStock;
+import main.java.stock.NormalStock;
+import main.java.stock.RandomStock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,18 +20,22 @@ public class app {
         IAgent autoAgent = new AutoAgent(5);
         IAgent randAgent = new RandomAgent();
         IAgent avgAgent = new AveragingAgent(5, 20);
+        IAgent emaAgent = new EMAAgent(5, 20);
         ArrayList<IAgent> agentList = new ArrayList<>();
         agentList.add(autoAgent);
-        agentList.add(randAgent);
+//        agentList.add(randAgent);
         agentList.add(avgAgent);
+        agentList.add(emaAgent);
         IStock randStock = new RandomStock(10, 1000);
         IStock randStock2 = new RandomStock(15, 1000);
         IStock randStock3 = new RandomStock(20, 1000);
+        IStock normalStock = new NormalStock(15, 1000);
         List<IStock> stockList = new LinkedList<>();
         stockList.add(randStock);
         stockList.add(randStock2);
         stockList.add(randStock3);
-        IStockMarket market = new NaiveMarket(stockList, 10);
+        stockList.add(normalStock);
+        IStockMarket market = new NaiveMarket(stockList, 25);
 
         int timeLimit = 10000;
         boolean debug = false;

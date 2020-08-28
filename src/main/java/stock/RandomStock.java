@@ -1,7 +1,10 @@
-package main.java.market;
+package main.java.stock;
 
 import java.util.Random;
 
+/**
+ * the random stock fluctuates up and down randomly, with equal probability to go up or down
+ */
 public class RandomStock extends CommonStock implements IStock {
 
     public RandomStock(float initPrice, int initShares) {

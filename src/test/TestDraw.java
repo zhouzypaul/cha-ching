@@ -1,8 +1,8 @@
 package test;
 
-import main.java.market.IStock;
 import main.java.market.NaiveMarket;
-import main.java.market.RandomStock;
+import main.java.stock.IStock;
+import main.java.stock.RandomStock;
 
 import java.util.LinkedList;
 import java.util.List;

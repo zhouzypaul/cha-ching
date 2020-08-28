@@ -1,6 +1,6 @@
 package main.java.agent;
 
-import main.java.market.IStock;
+import main.java.stock.IStock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class AveragingAgent extends CommonAgent implements IAgent {
         this.longLen = longLen;
     }
 
-    public float getAverage(ArrayList<Float> ls, int length) {
+    protected float getAverage(ArrayList<Float> ls, int length) {
         if (length > ls.size()) {
             throw new RuntimeException("tried getting an average longer than the list");
         }
@@ -41,6 +41,10 @@ public class AveragingAgent extends CommonAgent implements IAgent {
         return avg;
     }
 
+    protected float averageFunc(ArrayList<Float> ls, int length) {
+        return this.getAverage(ls, length);
+    }
+
     @Override
     public HashMap<IStock, Integer> buyDecision(List<IStock> marketInfo, HashMap<IStock, ArrayList<Float>> pastInfo) {
         HashMap<IStock, Integer> buy = new HashMap<>();
@@ -48,8 +52,8 @@ public class AveragingAgent extends CommonAgent implements IAgent {
             if (pastInfo.containsKey(stock)) { // don't buy anything on first day
                 int longHist = Math.min(this.longLen, pastInfo.get(stock).size());
                 int shortHist = Math.min(this.shortLen, pastInfo.get(stock).size());
-                float longAvg = getAverage(pastInfo.get(stock), longHist);
-                float shortAvg = getAverage(pastInfo.get(stock), shortHist);
+                float longAvg = this.averageFunc(pastInfo.get(stock), longHist);
+                float shortAvg = this.averageFunc(pastInfo.get(stock), shortHist);
                 if (shortAvg > longAvg) {
                     float percent = (shortAvg - longAvg) / longAvg;
                     int buyAmount = Math.min(stock.getAvailableShares(), (int) (this.balance * percent / stock.getPrice()));
@@ -69,8 +73,8 @@ public class AveragingAgent extends CommonAgent implements IAgent {
             if (pastInfo.containsKey(stock)) {
                 int longHist = Math.min(this.longLen, pastInfo.size());
                 int shortHist = Math.min(this.shortLen, pastInfo.size());
-                float longAvg = getAverage(pastInfo.get(stock), longHist);
-                float shortAvg = getAverage(pastInfo.get(stock), shortHist);
+                float longAvg = this.averageFunc(pastInfo.get(stock), longHist);
+                float shortAvg = this.averageFunc(pastInfo.get(stock), shortHist);
                 if (shortAvg < longAvg) {
                     float percent = (longAvg - shortAvg) / shortAvg;
                     int sellAmount = (int) (percent * amountPosses);
