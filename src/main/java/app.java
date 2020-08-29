@@ -21,11 +21,13 @@ public class app {
         IAgent randAgent = new RandomAgent();
         IAgent avgAgent = new AveragingAgent(5, 20);
         IAgent emaAgent = new EMAAgent(5, 20);
+        IAgent soAgent = new SOAgent();
         ArrayList<IAgent> agentList = new ArrayList<>();
-        agentList.add(autoAgent);
+//        agentList.add(autoAgent);
 //        agentList.add(randAgent);
         agentList.add(avgAgent);
         agentList.add(emaAgent);
+        agentList.add(soAgent);
         IStock randStock = new RandomStock(10, 1000);
         IStock randStock2 = new RandomStock(15, 1000);
         IStock randStock3 = new RandomStock(20, 1000);
