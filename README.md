@@ -7,9 +7,9 @@
 
 ## Table of Contents
 - [Dependencies](#dependencies)
+- [Running the App](#usage)
 - [Agent Descriptions](#agents)
 - [Market Descriptions](#markets)
-- [Running the App](#usage)
 
 ### Dependencies
 > jfreechart-1.5.0
@@ -17,6 +17,12 @@
 > commons-math3-3.6.1
 
 all the external libraries above can be found at `src/main/resources`
+
+
+### Usage
+run `app.java` found at `src/main/java/`
+
+Change the agent types and market types at the top of `app.java` to use different agents and markets
 
 ### Agents
 The Agents take in information from the market, and decide on what to buy and how much to buy. 
@@ -46,6 +52,18 @@ The Averaging agent also tries to buy low and sell high, but instead uses the ["
 The Agent buys and sells stock randomly, within its budget
 ![Random Agent](assets/randomAgent.png)
 
+### Stocks 
+There are several kinds of stocks 
+
+1. **Real Stocks**:
+These are real company stock's history data, such as Google's stock, parsed from [Yahoo Finance](https://finance.yahoo.com/). 
+
+2. **Simulated Random Stock**:
+There are purely simulated stocks that fluctuates randomly, either uniformly or according to a normal distribution.
+
+3. **Simulated Cyclical Stock**:
+Simulate stocks that imitates real world stocks that have trends and cycles. 
+
 ### Markets
 The Market holds a list of different stocks, each fluctuating with time. 
 
@@ -53,8 +71,3 @@ The follwoing types of stock markets are provided:
 
 1. **Naive Market**:
 A simple market that only keeps track of how much stock are bought and sold, only keeps track of daily closing price, and assumes that the amount of buying and selling has no impact on stock price.
-
-### Usage
-run `app.java` found at `src/main/java/`
-
-Change the agent types and market types at the top of `app.java` to use different agents and markets

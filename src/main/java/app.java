@@ -4,6 +4,7 @@ import main.java.agent.*;
 import main.java.graph.XYGraph;
 import main.java.market.IStockMarket;
 import main.java.market.NaiveMarket;
+import main.java.stock.GoogleStock;
 import main.java.stock.IStock;
 import main.java.stock.NormalStock;
 import main.java.stock.RandomStock;
@@ -23,23 +24,25 @@ public class app {
         IAgent emaAgent = new EMAAgent(5, 20);
         IAgent soAgent = new SOAgent();
         ArrayList<IAgent> agentList = new ArrayList<>();
-//        agentList.add(autoAgent);
+        agentList.add(autoAgent);
 //        agentList.add(randAgent);
-        agentList.add(avgAgent);
+//        agentList.add(avgAgent);
         agentList.add(emaAgent);
         agentList.add(soAgent);
         IStock randStock = new RandomStock(10, 1000);
         IStock randStock2 = new RandomStock(15, 1000);
         IStock randStock3 = new RandomStock(20, 1000);
         IStock normalStock = new NormalStock(15, 1000);
+        IStock googleStock = new GoogleStock(600, 1000);
         List<IStock> stockList = new LinkedList<>();
-        stockList.add(randStock);
-        stockList.add(randStock2);
-        stockList.add(randStock3);
-        stockList.add(normalStock);
+//        stockList.add(randStock);
+//        stockList.add(randStock2);
+//        stockList.add(randStock3);
+//        stockList.add(normalStock);
+        stockList.add(googleStock);
         IStockMarket market = new NaiveMarket(stockList, 25);
 
-        int timeLimit = 10000;
+        int timeLimit = 1000;
         boolean debug = false;
 
         HashMap<IAgent, ArrayList<Float>> netW = new HashMap<>();
@@ -85,7 +88,7 @@ public class app {
                 // graph
                 netW.get(agent).add(agent.getNetWorth());
                 portfolioW.get(agent).add(portfolioWorth);
-                stockW.get(agent).add(market.getAveragePrice() * 2000);
+                stockW.get(agent).add(market.getAveragePrice() * 15);
 
                 // market update
                 market.adjustMarket(buyDecision, sellDecision);
